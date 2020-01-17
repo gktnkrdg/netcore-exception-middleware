@@ -19,12 +19,24 @@ namespace ExceptionHandling
            .WriteTo.Console()
            .CreateLogger();
             Log.Information("Starting up");
-            CreateHostBuilder(args).Build().Run();
+            try
+            {
+                Log.Information("Starting web host");
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Application Startup error");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
+
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-             .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

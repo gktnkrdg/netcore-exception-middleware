@@ -11,11 +11,16 @@ namespace ExceptionHandling.Controllers
     [Route("api/[controller]")]
     public class ValuesController : ControllerBase
     {
-      
+        private readonly ILogger<ValuesController> _logger;
+        public ValuesController(ILogger<ValuesController> logger)
+        {
+            _logger = logger;
+        }
 
         [HttpGet("{id}")]
         public int Get(int id)
         {
+            _logger.LogInformation("Test output ");
             int result = 0 / id;
             
             return result;
