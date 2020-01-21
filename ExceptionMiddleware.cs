@@ -7,6 +7,7 @@ using System.Security.Authentication;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using Serilog;
 
 namespace ExceptionHandling
@@ -39,11 +40,11 @@ namespace ExceptionHandling
             httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             var now = DateTime.UtcNow;
             Log.Error($"{now.ToString("HH:mm:ss")} : {ex}");
-            return httpContext.Response.WriteAsync(new ErrorResultModel()
+            return httpContext.Response.WriteAsync(JsonConvert.SerializeObject(new ErrorResultModel()
             {
                 StatusCode = httpContext.Response.StatusCode,
                 Message = ex.Message
-            }.ToString());
+            }));
         }
     }
     public static class ExceptionMiddlewareExtensions

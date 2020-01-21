@@ -9,20 +9,19 @@ namespace ExceptionHandling.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ValuesController : ControllerBase
+    public class DivideController : ControllerBase
     {
-        private readonly ILogger<ValuesController> _logger;
-        public ValuesController(ILogger<ValuesController> logger)
+        private readonly ILogger<DivideController> _logger;
+        public DivideController(ILogger<DivideController> logger)
         {
             _logger = logger;
         }
 
-        [HttpGet("{id}")]
-        public int Get(int id)
+        [HttpGet("{number}")]
+        public int Get(int number)
         {
-            _logger.LogInformation("Test output ");
-            int result = 0 / id;
-            
+            _logger.LogInformation("Divide Method Call");
+            int result = 12 / number;
             return result;
         }
     }
